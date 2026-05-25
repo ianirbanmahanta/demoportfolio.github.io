@@ -264,6 +264,17 @@
     to { opacity: 1; transform: scale(1); }
   }
 
+  /* Typing Effect */
+.typing-cursor {
+  color: var(--accent);
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
   /* SECTION COMMON */
   .section-inner {
     max-width: 1200px; margin: 0 auto;
@@ -648,7 +659,9 @@
   <div class="hero-left">
     <p class="hero-tag">▸ Available for opportunities</p>
     <h1 class="hero-name">Anirban<br><span>Mahanta</span></h1>
-    <p class="hero-role">// Aspiring Data Analyst</p>
+    <p class="hero-role">
+  // <span id="typing-text"></span><span class="typing-cursor">|</span>
+</p>
     <p class="hero-desc">Turning raw data into actionable insights through statistical analysis, visualization, and machine learning. Passionate about uncovering patterns that drive smarter decisions.</p>
     <div class="hero-btns">
       <a href="#projects" class="btn-primary">View Projects</a>
@@ -1098,6 +1111,50 @@ Be concise, friendly, and helpful. Answer questions about Anirban's background, 
     document.getElementById('formSubject').value = '';
     document.getElementById('formMessage').value = '';
   }
+
+  // Typing Effect Hero Text
+const typingText = document.getElementById("typing-text");
+
+const roles = [
+  "Aspiring Data Analyst",
+  "Python & SQL Enthusiast",
+  "Power BI Dashboard Creator",
+  "Turning Data Into Insights",
+  "Machine Learning Explorer",
+  "Data Storytelling Passionate",
+  "Business Intelligence Learner"
+];
+
+let roleIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeEffect() {
+  const currentRole = roles[roleIndex];
+
+  if (!isDeleting) {
+    typingText.textContent = currentRole.substring(0, charIndex + 1);
+    charIndex++;
+
+    if (charIndex === currentRole.length) {
+      isDeleting = true;
+      setTimeout(typeEffect, 1400);
+      return;
+    }
+  } else {
+    typingText.textContent = currentRole.substring(0, charIndex - 1);
+    charIndex--;
+
+    if (charIndex === 0) {
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+    }
+  }
+
+  setTimeout(typeEffect, isDeleting ? 45 : 85);
+}
+
+typeEffect();
 </script>
 </body>
 </html>
